@@ -1,22 +1,56 @@
-def get_data():
-    first_number = float(input("Enter first number: "))
-    operation_type = input("Enter operation(- + * /): ")
-    next_number = float(input("Enter next number: "))
-    return first_number, operation_type, next_number
+def validate_data():
+    first_num = float(input("Enter first number: "))
+    operation = input("Enter operation(- + * /): ")
+    second_num = float(input("Enter first number: "))
+    return first_num, operation, second_num
 
-def calculator(first, operation, second):
-    if operation == "-":
-        return first - second
-    elif operation == "+":
-        return first + second
-    elif operation == "*":
-        return first * second
-    elif operation == "/":
-        return first / second
+# calculations
+def add(num_1, num_2):
+    return num_1 + num_2
 
-def default_calculation():
-    first_number, operation_type, next_number = get_data()
-    result = calculator(first_number, operation_type, next_number)
-    print(result)
+def subtract(num_1, num_2):
+    return num_1 - num_2
 
-saved_calc = 0
+def divide(num_1, num_2):
+    try:
+        return num_1 / num_2
+    except ZeroDivisionError:
+        print("You can't divide by zero")
+
+def multiply(num_1, num_2):
+    return num_1 * num_2
+
+# call the calculation
+def do_calc(first_num, operation, second_num):
+    operations = {
+         "+": add,
+         "-": subtract,
+         "/": divide,
+         "*": multiply
+    }
+    return operations[operation](first_num, second_num)
+
+def get_result():
+    first_num, operation, next_num = validate_data()
+    result = do_calc(first_num, operation, next_num)
+    return result
+
+def continue_result(saved_calculation):
+    second_num = float(input("Enter next number: "))
+    operation = input("Enter operation(- + * /): ")
+    result = do_calc(saved_calculation, operation, second_num)
+    return result
+
+# start function
+def start_calc():
+    calculation = get_result()
+    print(calculation)
+
+    continue_calc = input("Continue calculation? Yes o No: ").lower()
+    if continue_calc == "yes":
+        new_calc = continue_result(calculation)
+        print(new_calc)
+    else:
+        print("Calculation completed")
+
+start_calc()
