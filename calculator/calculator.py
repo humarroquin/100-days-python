@@ -46,11 +46,16 @@ def start_calc():
     calculation = get_result()
     print(calculation)
 
-    continue_calc = input("Continue calculation? Yes o No: ").lower()
-    if continue_calc == "yes":
-        new_calc = continue_result(calculation)
-        print(new_calc)
-    else:
-        print("Calculation completed")
+    is_continue = True
+    while is_continue:
+        continue_calc = input("Continue calculation? Yes o No: ").lower()
+        
+        if continue_calc == "yes":
+            new_calc = continue_result(calculation)
+            calculation = new_calc
+            print(new_calc)
+        else:
+            is_continue = False
+            print("Calculation completed")
 
 start_calc()
