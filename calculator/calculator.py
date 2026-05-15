@@ -1,8 +1,23 @@
-def validate_data():
+def get_data():
     first_num = float(input("Enter first number: "))
-    operation = input("Enter operation(- + * /): ")
-    second_num = float(input("Enter first number: "))
+    
+    valid_operations = ["-", "+", "*", "/"]
+    while True:
+        operation = input("Enter operation(- + * /): ")
+        if operation in valid_operations:
+            break
+        else:
+            print("Not a valid operator")
+
+    second_num = float(input("Enter second number: "))
     return first_num, operation, second_num
+
+def validate_data():
+    while True:
+        try:
+            return get_data()
+        except ValueError:
+            print("The calculator only works with numbers.")
 
 # calculations
 def add(num_1, num_2):
@@ -12,10 +27,7 @@ def subtract(num_1, num_2):
     return num_1 - num_2
 
 def divide(num_1, num_2):
-    try:
-        return num_1 / num_2
-    except ZeroDivisionError:
-        print("You can't divide by zero")
+    return num_1 / num_2
 
 def multiply(num_1, num_2):
     return num_1 * num_2
