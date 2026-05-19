@@ -1,23 +1,19 @@
-def get_data():
-    first_num = float(input("Enter first number: "))
-    
+def get_numbers():
+    while True:
+        try:
+            num = float(input("Enter number: "))
+            return num
+        except ValueError:
+            print("The calculator only works with numbers.")
+
+def get_operation():
     valid_operations = ["-", "+", "*", "/"]
     while True:
         operation = input("Enter operation(- + * /): ")
         if operation in valid_operations:
-            break
+            return operation
         else:
             print("Not a valid operator")
-
-    second_num = float(input("Enter second number: "))
-    return first_num, operation, second_num
-
-def validate_data():
-    while True:
-        try:
-            return get_data()
-        except ValueError:
-            print("The calculator only works with numbers.")
 
 # calculations
 def add(num_1, num_2):
@@ -42,15 +38,14 @@ def do_calc(first_num, operation, second_num):
     }
     return operations[operation](first_num, second_num)
 
-def get_result():
-    first_num, operation, next_num = validate_data()
+def get_result(saved_calculation=None):
+    if saved_calculation is None:
+        first_num = get_numbers()
+    else:
+        first_num = saved_calculation
+    operation = get_operation()
+    next_num = get_numbers()
     result = do_calc(first_num, operation, next_num)
-    return result
-
-def continue_result(saved_calculation):
-    second_num = float(input("Enter next number: "))
-    operation = input("Enter operation(- + * /): ")
-    result = do_calc(saved_calculation, operation, second_num)
     return result
 
 # start function
@@ -60,10 +55,10 @@ def start_calc():
 
     is_continue = True
     while is_continue:
-        continue_calc = input("Continue calculation? Yes o No: ").lower()
+        continue_calc = input("Continue calculation? Yes or No: ").lower()
         
         if continue_calc == "yes":
-            new_calc = continue_result(calculation)
+            new_calc = get_result(calculation)
             calculation = new_calc
             print(new_calc)
         else:
