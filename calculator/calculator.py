@@ -16,17 +16,17 @@ def get_operation():
             print("Not a valid operator")
 
 # calculations
-def add(num_1, num_2):
-    return num_1 + num_2
+def add(n1, n2):
+    return n1 + n2
 
-def subtract(num_1, num_2):
-    return num_1 - num_2
+def subtract(n1, n2):
+    return n1 - n2
 
-def divide(num_1, num_2):
-    return num_1 / num_2
+def divide(n1, n2):
+    return n1 / n2
 
-def multiply(num_1, num_2):
-    return num_1 * num_2
+def multiply(n1, n2):
+    return n1 * n2
 
 # call the calculation
 def do_calc(first_num, operation, second_num):
@@ -45,24 +45,35 @@ def get_result(saved_calculation=None):
         first_num = saved_calculation
     operation = get_operation()
     next_num = get_numbers()
-    result = do_calc(first_num, operation, next_num)
-    return result
+    try:
+        result = do_calc(first_num, operation, next_num)
+        return result
+    except ZeroDivisionError:
+        print("Can't divide by zero")
+        return first_num
+
+def get_user_choice():
+    valid_options = ["yes", "no"]
+    while True:
+        user_choice = input("Continue calculation? Yes or No: ").lower()
+        if user_choice in valid_options:
+            return user_choice
+        else:
+            print("This is not a valid option")
 
 # start function
 def start_calc():
     calculation = get_result()
     print(calculation)
 
-    is_continue = True
-    while is_continue:
-        continue_calc = input("Continue calculation? Yes or No: ").lower()
-        
-        if continue_calc == "yes":
+    while True:
+        user_choice = get_user_choice()
+        if user_choice == "yes":
             new_calc = get_result(calculation)
             calculation = new_calc
             print(new_calc)
         else:
-            is_continue = False
             print("Calculation completed")
+            break
 
 start_calc()
