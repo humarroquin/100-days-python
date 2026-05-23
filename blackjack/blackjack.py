@@ -29,21 +29,28 @@ def initialize_game(player_cards, house_cards):
 def game_logic():
     player_cards = []
     house_cards = []
-    player_score = 0
-    house_score = 0
 
-    player_sum, house_sum = initialize_game(player_cards, house_cards)
-    player_score = player_sum
-    house_score = house_sum
+    current_player_score, house_score = initialize_game(player_cards, house_cards)
     
-    check = input("Do you want another card? Yes or No? ").lower()
-    if check != "yes":
-        if player_sum < house_sum:
-            print("You lose!")
+    while current_player_score < 21:
+        hit_me = input("Do you want another card? Yes or No? ").lower()
+        if hit_me == "yes":
+            draw_card(player_cards)
+            current_player_score = sum_numbers(player_cards)
+            print(f'Player Cards: {" ".join(map(str, player_cards))} | Current score: {current_player_score}')
         else:
-            print("You win")
+            break
+        if current_player_score > 21:
+            print("You lose!")
+            print(f'Player Cards: {" ".join(map(str, player_cards))} | Current score: {current_player_score}')
+            return
+
+    if current_player_score < house_score:
+        print("House wins!")
+    else:
+        print("You win!")
     
-    print(player_cards, house_cards, player_score, house_score)
+    print(player_cards, house_cards, current_player_score, house_score)
 
 game_logic()
 
