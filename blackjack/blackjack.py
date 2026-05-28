@@ -1,24 +1,8 @@
 import random
 import game_assets
 
-CARDS = [
-    "A",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "J",
-    "Q",
-    "K"
-]
-
 def get_random_card():
-    return random.choice(CARDS)
+    return random.choice(game_assets.CARDS)
 
 def draw_card(cards_list):
     card = get_random_card()
@@ -31,12 +15,51 @@ def sum_numbers(cards_list):
     return card_total
 
 def print_player_score(player_cards, player_score):
-    print(f"Score: {player_score}")
-    for i in player_cards:
-        print(game_assets.CARD_ART[i])
+    print("Player Cards:")
+    
+    #todo: turn this into a reusable function
+    all_cards = []
+    for card in player_cards:
+        split_card = game_assets.CARD_ART[card].splitlines()
+        cleaned_split_card = []
+        for i in split_card:
+            if i != "": 
+                cleaned_split_card.append(i)
+        all_cards.append(cleaned_split_card)
 
-def print_computer_score(computer_cards, computer_score):
-    print(f'Computer Cards: {" ".join(map(str, computer_cards))} | Score: {computer_score}')
+    for row in range(3):
+        for card in all_cards:
+            print(card[row], end=" ")
+        print()
+
+    print(f"Score: {player_score}\n")
+
+def print_computer(computer_cards):
+    print("Computer Cards:")
+ 
+    all_cards = []
+    first_card = computer_cards[0]
+    
+    # Card 1
+    split_card = game_assets.CARD_ART[first_card].splitlines()
+    cleaned_card = []
+    for i in split_card:
+            if i != "": 
+                cleaned_card.append(i)
+    all_cards.append(cleaned_card)
+
+    # Hidden card
+    card_hidden = game_assets.CARD_ART["HIDDEN"].splitlines()
+    card_cleaned_hidden = []
+    for i in card_hidden:
+            if i != "": 
+                card_cleaned_hidden.append(i)
+    all_cards.append(card_cleaned_hidden)
+
+    for row in range(3):
+        for card in all_cards:
+            print(card[row], end=" ")
+        print()
 
 def initialize_game(player_cards, house_cards):
     for i in range(2):
@@ -47,7 +70,7 @@ def initialize_game(player_cards, house_cards):
     house_sum = sum_numbers(house_cards)
 
     print_player_score(player_cards, player_sum)
-    print(f"House cards: {house_cards[0]}")
+    print_computer(house_cards)
     return player_sum, house_sum
 
 # === game logic starts ===
@@ -74,7 +97,7 @@ def game_logic():
             return
 
         elif current_player_score > 21:
-            print("\nYou lose!")
+            print(game_assets.BLACKJACK_SCREENS["bust"])
             print_player_score(player_cards, current_player_score)
             print_computer_score(house_cards, house_score)
             return
