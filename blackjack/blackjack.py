@@ -70,6 +70,7 @@ def game_logic():
             initial_house_display = [house_cards[0], "HIDDEN"]
             print_cards_and_score(initial_house_display, "House")
 
+            # ? Exit game and keep the result to compare later; do the same for dealer
             if current_player_score > 21:
                 game_status = "player_bust"
                 active_game = False
@@ -80,12 +81,13 @@ def game_logic():
         else:
             active_game = False
     
+    # first status check
     if game_status == "player_bust" or game_status == "player_wins":
         print(game_assets.BLACKJACK_SCREENS[game_status])
         print_cards_and_score(player_cards, "Player", current_player_score)
     
+    # dealer starts turn
     else:
-        # dealer starts turn
         while current_house_score < 17:
             draw_card(house_cards)
             current_house_score = sum_numbers(house_cards)
@@ -97,11 +99,12 @@ def game_logic():
 
             elif current_house_score == 21:
                 game_status = "house_wins"
-
+        # second status check
         if game_status == "house_bust" or game_status == "house_wins":
             print(game_assets.BLACKJACK_SCREENS[game_status])
             print_cards_and_score(house_cards, "House", current_house_score)
 
+        # final status check
         else:
             if current_player_score > current_house_score:
                 game_status = "player_wins"
@@ -114,6 +117,7 @@ def game_logic():
             print_cards_and_score(player_cards, "Player", current_player_score)
             print_cards_and_score(house_cards, "House", current_house_score)
 
+    # Continue playing? 
     continue_playing = input("Play again? Yes or No? ").lower()
     if continue_playing == "yes":
         game_logic()
