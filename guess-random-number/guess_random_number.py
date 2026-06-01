@@ -20,12 +20,17 @@ def play_game():
     print(f"You have {lives} lives to guess the number.")
 
     while lives > 0:
-        guess = int(input("Guess a number: "))
+        while True:
+            try:
+                guess = int(input("Guess a number: "))
+                break
+            except ValueError:
+                print("Choices MUST be a NUMBER")
 
         if guess < number:
             print("Guess too low.")
         elif guess > number:
-            print("Guess to high")
+            print("Guess too high")
         else:
             print(f"You win! The number was {number}")
             break
