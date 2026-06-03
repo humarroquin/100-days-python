@@ -21,7 +21,7 @@ data = [
         "name": "Dwayne Johnson",
         "description": "Actor and wrestler",
         "country": "United States",
-        "followers": 395
+        "followers": 396
     },
     {
         "name": "Kim Kardashian",
