@@ -8,13 +8,19 @@ class Flashcards:
     def __init__(self, flashcards):
         self.flashcards = flashcards
 
-
+    def study_flashcards(self):
+        for flashcard in self.flashcards:
+            user_answer = input(flashcard.flashcard_question)
+            if flashcard.flashcard_answer == user_answer:
+                print("That's correct.")
+            else:
+                print("That's not correct")
 
 # start program
 flashcards = []
 def start_app(flashcards):
     while True:
-        option = input("What do you want to do? PRACTICE (type P) or ADD FLASHCARD (type a): ").lower()
+        option = input("STUDY (type S), ADD FLASHCARD (Type A) or QUIT (type Q): ").lower()
         if option == "a":
             while True:
                 question = input("Type the question: ")
@@ -24,5 +30,11 @@ def start_app(flashcards):
                 add_card = input("Add another card? Yes (type y) or No (type N): ").lower()
                 if add_card != "y":
                     break
+        elif option == "s":
+            deck = Flashcards(flashcards)
+            deck.study_flashcards()
+        elif option == "q":
+            print("Program has ended")
+            break
 
 start_app(flashcards)
