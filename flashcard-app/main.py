@@ -1,3 +1,5 @@
+import random
+
 # classes
 class Flashcard:
     def __init__(self, question, answer):
@@ -16,17 +18,23 @@ class Flashcards:
         score = 0
         q_num = 0
 
-        for flashcard in self.flashcards:
+        new_deck = self.flashcards.copy()
+        random.shuffle(new_deck)
+
+        for flashcard in new_deck:
             user_answer = input(f"{flashcard.flashcard_question} ")
             if flashcard.flashcard_answer == user_answer:
                 print("That's correct!")
-                print(f"Answer: {flashcard.flashcard_answer}")
                 score += 1
             else:
                 print("That's not correct.")
                 print(f"Answer: {flashcard.flashcard_answer}")
             q_num += 1
             print(f"Current Score: {score}/{q_num}")
+
+            
+        print("You've reached the end of the deck.")
+        print(f"Your final score is {score}/{len(new_deck)}")
 
 # start program
 deck = Flashcards()
@@ -42,7 +50,7 @@ def start_app(deck):
                 if add_card != "y":
                     break
         elif option == "s":
-            if len(deck.flashcards) >= 1:
+            if deck.flashcards:
                 deck.study_flashcards()
             else:
                 print("No flashcards in deck.")
