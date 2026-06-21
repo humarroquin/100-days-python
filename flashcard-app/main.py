@@ -13,8 +13,24 @@ class Flashcards:
         flashcard = Flashcard(question, answer)
         self.flashcards.append(flashcard)
 
-    def save_flashcard(self):
-        pass
+    def save_flashcards(self):
+        file_path = "flashcard-app/saved-cards.txt"
+        with open(file_path, "w") as file:
+            for flashcard in self.flashcards:
+                line = f"{flashcard.question} | {flashcard.answer}"
+                file.write(line + "\n")
+
+    def load_file(self):
+        file_path = "flashcard-app/saved-cards.txt"
+        try:
+            with open(file_path, "r") as file:
+                for line in file:
+                    question, answer = line.strip().split("|")
+                    question = question.strip()
+                    answer = answer.strip()
+                    self.add_flashcard(question, answer)
+        except FileNotFoundError:
+            self.flashcards = []
 
     def study_flashcards(self):
         score = 0
@@ -40,6 +56,7 @@ class Flashcards:
 
 # start program
 deck = Flashcards()
+deck.load_file()
 def start_app(deck):
     while True:
         option = input("STUDY (type S), ADD FLASHCARD (Type A) or QUIT (type Q): ").lower()
@@ -47,7 +64,10 @@ def start_app(deck):
             while True:
                 question = input("Type the question: ")
                 answer = input("Type the answer: ")
+
                 deck.add_flashcard(question, answer)
+                deck.save_flashcards()
+
                 add_card = input("Add another card? Yes (type y) or No (type N): ").lower()
                 if add_card != "y":
                     break

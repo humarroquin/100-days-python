@@ -1,0 +1,4 @@
+In Python, lists are mutable (can be changed after creation). | True
+The expression 3 == 3 evaluates to False. | False
+Python is a statically typed programming language. | False
+In Python, indentation is used to define code blocks. | True
