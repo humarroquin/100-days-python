@@ -13,11 +13,21 @@ def add_setting(settings, new_setting):
         settings[key] = value
         return f"Setting '{key}' added with value '{value}' successfully!"
 
+def update_setting(settings, new_setting):
+    key, value = new_setting
+    key = key.lower()
+    value = value.lower()
+    if key in settings:
+        settings[key] = value 
+        return f"Setting '{key}' updated to '{value}' successfully!"
+    else:
+        return f"Setting '{key}' does not exist! Cannot update a non-existing setting."
+
 def delete_setting(settings, key):
     key = key.lower()
     if key in settings:
         settings.pop(key, None)
-        return f"Seeting '{key}' deleted successfully!"
+        return f"Setting '{key}' deleted successfully!"
     else:
         return "Setting not found!"
 
