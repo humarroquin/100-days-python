@@ -1,6 +1,6 @@
-settings = {
-    'theme': 'dark',
-    'notifications': 'enabled'
+test_settings = {
+    "theme": "dark",
+    "notifications": "enabled"
 }
 
 def add_setting(settings, new_setting):
@@ -8,9 +8,27 @@ def add_setting(settings, new_setting):
     key = key.lower()
     value = value.lower()
     if key in settings:
-        return f"""Setting '{key}' already exists! 
-Cannot add a new setting with this name."""
-    
+        return f"Setting '{key}' already exists! Cannot add a new setting with this name."
+    else:
+        settings[key] = value
+        return f"Setting '{key}' added with value '{value}' successfully!"
 
-test = add_setting(settings, ('Theme', 'Light'))
+def delete_setting(settings, key):
+    key = key.lower()
+    if key in settings:
+        settings.pop(key, None)
+        return f"Seeting '{key}' deleted successfully!"
+    else:
+        return "Setting not found!"
+
+def view_settings (settings):
+    if not settings:
+        return "No settings available."
+    else:
+        print_message = "Current User Settings:\n"
+        for key, desc in settings.items():
+            print_message += f"{key.capitalize()}: {desc}\n"
+        return print_message
+
+test = view_settings(test_settings)
 print(test)
