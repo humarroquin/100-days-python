@@ -5,6 +5,9 @@ class Flashcard:
         self.question = question
         self.answer = answer
 
+    def check_answer(self, user_answer):
+        return self.answer == user_answer
+
 class Flashcards:
     def __init__(self):
         self.flashcards = []
@@ -14,14 +17,14 @@ class Flashcards:
         self.flashcards.append(flashcard)
 
     def save_flashcards(self):
-        file_path = "flashcard-app/saved-cards.txt"
+        file_path = "saved-cards.txt"
         with open(file_path, "w") as file:
             for flashcard in self.flashcards:
                 line = f"{flashcard.question} | {flashcard.answer}"
                 file.write(line + "\n")
 
     def load_file(self):
-        file_path = "flashcard-app/saved-cards.txt"
+        file_path = "saved-cards.txt"
         try:
             with open(file_path, "r") as file:
                 for line in file:
@@ -41,7 +44,7 @@ class Flashcards:
 
         for flashcard in new_deck:
             user_answer = input(f"{flashcard.question} ")
-            if flashcard.answer == user_answer:
+            if flashcard.check_answer(user_answer):
                 print("That's correct!")
                 score += 1
             else:
@@ -50,7 +53,7 @@ class Flashcards:
             q_num += 1
             print(f"Questions Answered: {q_num}")
             print(f"Correct Answers: {score}")
-            
+
         print("You've reached the end of the deck.")
         print(f"Your final score is {score}/{len(new_deck)}")
 
