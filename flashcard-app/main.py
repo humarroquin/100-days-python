@@ -1,5 +1,6 @@
 import random
 
+# This is a flashcard class
 class Flashcard:
     def __init__(self, question, answer):
         self.question = question
